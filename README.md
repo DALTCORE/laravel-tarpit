@@ -39,7 +39,7 @@ If you discover any security related issues, please contact [Ramon Smit](https:/
 
 ## Credits
 
-- [RamonSmit][https://github.com/RamonSmit]
+- [RamonSmit](https://github.com/RamonSmit)
 
 ## License
 
