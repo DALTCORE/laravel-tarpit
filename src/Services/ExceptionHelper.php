@@ -60,7 +60,6 @@ class ExceptionHelper
                 $client = Tarpit::client();
                 $request = $client->request('POST', 'https://' . config('tarpit.url') . '/api/' .
                     config('tarpit.version') . '/ip/sync', $params);
-                dd($request->getBody()->getContents());
             } catch (\Exception $e) {
                 \Log::error($e->getMessage());
             }
