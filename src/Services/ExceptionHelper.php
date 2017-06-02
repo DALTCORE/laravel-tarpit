@@ -1,20 +1,18 @@
 <?php
 
-namespace DALTCORE\Services;
-
-use DALTCORE\Services\Tarpit\Tarpit;
+namespace DALTCORE\Tarpit\Services;
 
 class ExceptionHelper
 {
     /**
-     * @param                              $request
-     * @param \DALTCORE\Services\Exception $exception
+     * @param                                     $request
+     * @param \Exception                          $exception
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public static function handleTarpitCommunication($request, Exception $exception)
+    public static function handleTarpitCommunication($request, \Exception $exception)
     {
-        if (config('tarpitcontrol.enabled') === true) {
+        if (config('tarpit.enabled') === true) {
             // Define the response
             $fields = [
                 'errors' => 'Sorry, the page you are looking for could not be found.'
@@ -46,9 +44,9 @@ class ExceptionHelper
              */
             $params = [
                 'form_params' => [
-                    'type'   => config('tarpitcontrol.type'),
+                    'type'   => config('tarpit.type'),
                     'ip'     => $request->ip(),
-                    'from'   => str_replace(['http://', 'https://', '/'], '', config('tarpitcontrol.domain')),
+                    'from'   => str_replace(['http://', 'https://', '/'], '', config('tarpit.domain')),
                     'uri'    => $request->server('REQUEST_URI'),
                     'log'    => 1,
                     'fields' => $fields
@@ -60,8 +58,9 @@ class ExceptionHelper
              */
             try {
                 $client = Tarpit::client();
-                $request = $client->request('POST', 'https://' . config('tarpitcontrol.url') . '/api/' .
-                    config('tarpitcontrol.version') . '/ip/sync', $params);
+                $request = $client->request('POST', 'https://' . config('tarpit.url') . '/api/' .
+                    config('tarpit.version') . '/ip/sync', $params);
+                dd($request->getBody()->getContents());
             } catch (\Exception $e) {
                 \Log::error($e->getMessage());
             }

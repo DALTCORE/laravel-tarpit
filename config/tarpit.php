@@ -10,7 +10,7 @@ return [
     /**
      * HTTP-Tarpit API Key
      */
-    'type'    => env('TARPIT_API_KEY', null),
+    'key'     => env('TARPIT_API_KEY', false),
 
     /**
      * API URL
@@ -20,7 +20,7 @@ return [
     /**
      * API Version
      */
-    'version' => env('TARPIT_VERSION', 'v1'),
+    'version' => env('TARPIT_VERSION', 'v2'),
 
     /**
      * Handle requests in realtime or via cache
@@ -30,5 +30,5 @@ return [
     /**
      * Current website domain
      */
-    'domain'  => env('TARPIT_DOMAIN', 'basis-cms.vm')
+    'domain'  => env('TARPIT_DOMAIN', env('APP_URL', 'unknown.com'))
 ];

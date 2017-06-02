@@ -1,13 +1,13 @@
 <?php
 
-namespace DALTCORE\Services\Tarpit;
+namespace DALTCORE\Tarpit\Services;
 
 use Carbon\Carbon;
 use File;
 use GuzzleHttp\Client;
 
 /**
- * Class TarpitControl
+ * Class tarpit
  *
  * @package App\Helpers
  */
@@ -21,12 +21,12 @@ class Tarpit
      */
     public static function handler($request, $fields)
     {
-        if (config('tarpitcontrol.enabled') == true) {
+        if (config('tarpit.enabled') == true) {
             $params = [
                 'form_params' => [
-                    'type'   => config('tarpitcontrol.type'),
+                    'type'   => config('tarpit.type'),
                     'ip'     => $request->ip(),
-                    'from'   => str_replace(['http://', 'https://', '/'], '', config('tarpitcontrol.domain')),
+                    'from'   => str_replace(['http://', 'https://', '/'], '', config('tarpit.domain')),
                     'uri'    => $request->server('REQUEST_URI'),
                     'fields' => $fields,
                     'log'    => 0
@@ -36,11 +36,11 @@ class Tarpit
 
             // Hit and run, sync the clients!
             try {
-                $client = Control::client();
+                $client = Tarpit::client();
                 $res = $client->request(
                     'POST',
-                    'https://' . config('tarpitcontrol.url') . '/api/' .
-                    config('tarpitcontrol.version') . '/ip/sync',
+                    'https://' . config('tarpit.url') . '/api/' .
+                    config('tarpit.version') . '/ip/sync',
                     $params
                 );
             } catch (\Exception $e) {
@@ -52,11 +52,11 @@ class Tarpit
              */
             if ($params['form_params']['type'] === 'realtime') {
                 try {
-                    $client = Control::client();
+                    $client = Tarpit::client();
                     $res = $client->request(
                         'POST',
-                        'https://' . config('tarpitcontrol.url') . '/api/' .
-                        config('tarpitcontrol.version') . '/ip/sync',
+                        'https://' . config('tarpit.url') . '/api/' .
+                        config('tarpit.version') . '/ip/sync',
                         $params
                     );
                     $json = $res->getBody()->getContents();
@@ -66,11 +66,11 @@ class Tarpit
             } else {
                 if (File::exists($path) === false) {
                     try {
-                        $client = Control::client();
+                        $client = Tarpit::client();
                         $res = $client->request(
                             'GET',
-                            'https://' . config('tarpitcontrol.url') . '/api/' .
-                            config('tarpitcontrol.version') . '/ip/get'
+                            'https://' . config('tarpit.url') . '/api/' .
+                            config('tarpit.version') . '/ip/get'
                         );
                         file_put_contents($path, $res->getBody()->getContents());
                     } catch (\Exception $e) {
@@ -78,11 +78,11 @@ class Tarpit
                     }
                 } elseif (Carbon::now()->diffInMinutes(Carbon::createFromTimestamp(File::lastModified($path))) > 15) {
                     try {
-                        $client = Control::client();
+                        $client = Tarpit::client();
                         $res = $client->request(
                             'GET',
-                            'https://' . config('tarpitcontrol.url') . '/api/' .
-                            config('tarpitcontrol.version') . '/ip/get'
+                            'https://' . config('tarpit.url') . '/api/' .
+                            config('tarpit.version') . '/ip/get'
                         );
                         file_put_contents($path, $res->getBody()->getContents());
                     } catch (\Exception $e) {
@@ -103,7 +103,7 @@ class Tarpit
             }
 
             if (in_array($params['form_params']['ip'], $array)) {
-                return 'https://' . config('tarpitcontrol.url') . '/blocked/' . $params['form_params']['from'];
+                return 'https://' . config('tarpit.url') . '/blocked/' . $params['form_params']['from'];
             }
         }
 
@@ -118,8 +118,8 @@ class Tarpit
         return new Client(
             [
                 'headers' => [
-                    'User-Agent' => 'TarpitClientBot; Tarpit' . config('tarpitcontrol.version') . '; '
-                        . str_replace(['http://', 'https://', '/'], '', config('tarpitcontrol.domain')),
+                    'User-Agent' => 'TarpitClientBot; Tarpit' . config('tarpit.version') . '; '
+                        . str_replace(['http://', 'https://', '/'], '', config('tarpit.domain')),
                 ],
                 'timeout' => 5
             ]

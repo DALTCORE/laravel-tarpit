@@ -2,6 +2,8 @@
 
 namespace DALTCORE\Tarpit;
 
+use DALTCORE\Tarpit\Http\Middleware\Tarpit;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
@@ -11,7 +13,7 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
  * @see     http://laravel.com/docs/master/packages#service-providers
  * @see     http://laravel.com/docs/master/providers
  */
-class ServiceProvider extends BaseServiceProvider
+class TarpitServiceProvider extends BaseServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -22,24 +24,18 @@ class ServiceProvider extends BaseServiceProvider
     protected $defer = false;
 
     /**
-     * Register the service provider.
-     *
-     * @see http://laravel.com/docs/master/providers#the-register-method
-     * @return void
-     */
-    public function register()
-    {
-    }
-
-    /**
      * Application is booting
+     *
+     * @param \Illuminate\Routing\Router $router
      *
      * @see http://laravel.com/docs/master/providers#the-boot-method
      * @return void
      */
-    public function boot()
+    public function boot(Router $router)
     {
         $this->registerConfigurations();
+
+        $router->aliasMiddleware('tarpit', Tarpit::class);
     }
 
 
@@ -51,8 +47,8 @@ class ServiceProvider extends BaseServiceProvider
      */
     protected function registerConfigurations()
     {
-        $this->mergeConfigFrom($this->packagePath('config/config.php'), 'tarpit');
-        $this->publishes([$this->packagePath('config/config.php') => config_path('tarpit.php')], 'config');
+        $this->mergeConfigFrom($this->packagePath('config/tarpit.php'), 'tarpit');
+        $this->publishes([$this->packagePath('config/config.php') => config_path('tarpit.php')], 'tarpit');
     }
 
     /**

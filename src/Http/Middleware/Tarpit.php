@@ -1,13 +1,13 @@
 <?php
 
-namespace DALTCORE\Http\Middleware;
+namespace DALTCORE\Tarpit\Http\Middleware;
 
 use Closure;
 
 /**
- * Class TarpitControl
+ * Class Tarpit
  *
- * @package App\Http\Middleware
+ * @package DALTCORE\Http\Middleware
  */
 class Tarpit
 {
@@ -21,8 +21,8 @@ class Tarpit
      */
     public function handle($request, Closure $next)
     {
-        if (config('tarpitcontrol.enabled') === true) {
-            $redirectUrl = Control::handler($request, []);
+        if (config('tarpit.enabled') === true) {
+            $redirectUrl = \DALTCORE\Tarpit\Services\Tarpit::handler($request, []);
             if ($redirectUrl !== null) {
                 return redirect($redirectUrl);
             }
