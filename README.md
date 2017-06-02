@@ -35,6 +35,24 @@ In your `app/Exceptions/Handler.php` under function render() just before `return
 \DALTCORE\Tarpit\Services\ExceptionHelper::handleTarpitCommunication($request, $exception);
 ```
 
+In your `.env` file you have to add the following parameters
+```text
+# To enable the tarpit
+TARPIT_ENABLE=false
+
+# Tarpit endpoint
+TARPIT_ENDPOINT=api.http-tarpit.org
+
+# Tarpit API Version
+TARPIT_VERSION=v2
+
+# Direct sync or with cache (30 minutes)
+TARPIT_HANDLER=realtime
+
+# Your website domain
+TARPIT_DOMAIN=basis-cms.vm
+```
+
 If you discover any security related issues, please contact [Ramon Smit](https://github.com/ramonsmit).
 
 ## Credits
