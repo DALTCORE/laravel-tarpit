@@ -2,9 +2,16 @@
 
 namespace DALTCORE\Tarpit\Services;
 
+/**
+ * Class ExceptionHelper
+ *
+ * @package DALTCORE\Tarpit\Services
+ */
 class ExceptionHelper
 {
     /**
+     * Event handler for HTTP Tarpit
+     *
      * @param                                     $request
      * @param \Exception                          $exception
      *

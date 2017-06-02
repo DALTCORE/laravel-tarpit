@@ -2,10 +2,15 @@
 
 namespace DALTCORE\Tarpit;
 
+/**
+ * Class Facade
+ *
+ * @package DALTCORE\Tarpit
+ */
 class Facade extends \Illuminate\Support\Facades\Facade
 {
     /**
-     * {@inheritDoc}
+     * @return string
      */
     protected static function getFacadeAccessor()
     {
