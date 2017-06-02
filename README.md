@@ -40,6 +40,12 @@ In your `.env` file you have to add the following parameters
 # To enable the tarpit
 TARPIT_ENABLE=false
 
+# Your website domain
+TARPIT_DOMAIN=basis-cms.vm
+
+# Tarpit API Key
+TARPIT_API_KEY=af4ae3fe3ff09dbba45a601619ca783455cfeb4d
+
 # Tarpit endpoint
 TARPIT_ENDPOINT=api.http-tarpit.org
 
@@ -49,8 +55,6 @@ TARPIT_VERSION=v2
 # Direct sync or with cache (30 minutes)
 TARPIT_HANDLER=realtime
 
-# Your website domain
-TARPIT_DOMAIN=basis-cms.vm
 ```
 
 If you discover any security related issues, please contact [Ramon Smit](https://github.com/ramonsmit).
