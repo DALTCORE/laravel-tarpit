@@ -7,9 +7,8 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
- * Class PackageServiceProvider
+ * Class PackageServiceProvider.
  *
- * @package DALTCORE\Tarpit
  * @see     http://laravel.com/docs/master/packages#service-providers
  * @see     http://laravel.com/docs/master/providers
  */
@@ -19,16 +18,18 @@ class TarpitServiceProvider extends BaseServiceProvider
      * Indicates if loading of the provider is deferred.
      *
      * @see http://laravel.com/docs/master/providers#deferred-providers
+     *
      * @var bool
      */
     protected $defer = false;
 
     /**
-     * Application is booting
+     * Application is booting.
      *
      * @param \Illuminate\Routing\Router $router
      *
      * @see http://laravel.com/docs/master/providers#the-boot-method
+     *
      * @return void
      */
     public function boot(Router $router)
@@ -38,11 +39,11 @@ class TarpitServiceProvider extends BaseServiceProvider
         $router->aliasMiddleware('tarpit', Tarpit::class);
     }
 
-
     /**
-     * Register the package configurations
+     * Register the package configurations.
      *
      * @see http://laravel.com/docs/master/packages#configuration
+     *
      * @return void
      */
     protected function registerConfigurations()
@@ -52,7 +53,7 @@ class TarpitServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Loads a path relative to the package base directory
+     * Loads a path relative to the package base directory.
      *
      * @param string $path
      *
@@ -60,6 +61,6 @@ class TarpitServiceProvider extends BaseServiceProvider
      */
     protected function packagePath($path = '')
     {
-        return sprintf("%s/../%s", __DIR__, $path);
+        return sprintf('%s/../%s', __DIR__, $path);
     }
 }

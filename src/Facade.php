@@ -3,9 +3,7 @@
 namespace DALTCORE\Tarpit;
 
 /**
- * Class Facade
- *
- * @package DALTCORE\Tarpit
+ * Class Facade.
  */
 class Facade extends \Illuminate\Support\Facades\Facade
 {

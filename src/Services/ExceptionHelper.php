@@ -3,17 +3,15 @@
 namespace DALTCORE\Tarpit\Services;
 
 /**
- * Class ExceptionHelper
- *
- * @package DALTCORE\Tarpit\Services
+ * Class ExceptionHelper.
  */
 class ExceptionHelper
 {
     /**
-     * Event handler for HTTP Tarpit
+     * Event handler for HTTP Tarpit.
      *
-     * @param                                     $request
-     * @param \Exception                          $exception
+     * @param            $request
+     * @param \Exception $exception
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
@@ -22,7 +20,7 @@ class ExceptionHelper
         if (config('tarpit.enabled') === true) {
             // Define the response
             $fields = [
-                'errors' => 'Sorry, the page you are looking for could not be found.'
+                'errors' => 'Sorry, the page you are looking for could not be found.',
             ];
 
             // Add the exception class name, message and stack trace to response
@@ -47,7 +45,7 @@ class ExceptionHelper
             }
 
             /**
-             * HTTP Tarpit Helper
+             * HTTP Tarpit Helper.
              */
             $params = [
                 'form_params' => [
@@ -56,17 +54,17 @@ class ExceptionHelper
                     'from'   => str_replace(['http://', 'https://', '/'], '', config('tarpit.domain')),
                     'uri'    => $request->server('REQUEST_URI'),
                     'log'    => 1,
-                    'fields' => $fields
-                ]
+                    'fields' => $fields,
+                ],
             ];
 
-            /**
+            /*
              * Log users to DB
              */
             try {
                 $client = Tarpit::client();
-                $request = $client->request('POST', 'https://' . config('tarpit.url') . '/api/' .
-                    config('tarpit.version') . '/ip/sync', $params);
+                $request = $client->request('POST', 'https://'.config('tarpit.url').'/api/'.
+                    config('tarpit.version').'/ip/sync', $params);
             } catch (\Exception $e) {
                 \Log::error($e->getMessage());
             }
